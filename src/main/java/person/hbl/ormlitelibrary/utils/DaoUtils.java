@@ -161,6 +161,20 @@ public class DaoUtils<T> {
         dao.delete(objects);
     }
 
+
+    /**
+     * 清空表格数据
+     * delete from TableName;  // 清空数据
+     * update sqlite_sequence SET seq = 0 where name ='TableName'; // 自增长ID为 0
+     *
+     * @param tableName
+     * @throws SQLException
+     */
+    public void cleanTable(String tableName) throws SQLException {
+        dao.queryRaw("delete from " + tableName);
+        dao.queryRaw("update sqlite_sequence SET seq = 0 where name ='" + tableName + "'");
+    }
+
     // *************返回dao*********************************
 
     /**
