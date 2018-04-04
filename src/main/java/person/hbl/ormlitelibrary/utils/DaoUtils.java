@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import person.hbl.ormlitelibrary.helper.BaseDatabaseHelper;
 
@@ -116,6 +117,22 @@ public class DaoUtils<T> {
         return dao.queryForFieldValuesArgs(clauses);
     }
 
+    /**
+     * 匹配是否相同查找
+     *
+     * @param condition 要比较的条件
+     * @param content   内容
+     * @return
+     * @throws SQLException
+     */
+    public List<T> getDataEqByClause(String condition, Object content) throws SQLException {
+        if (dao == null) {
+            throw new SQLException("Dao is null");
+        }
+        QueryBuilder builder = dao.queryBuilder();
+        builder.where().eq(condition, content);  // 等于（=）equals
+        return builder.query();
+    }
 
     // *************更新数据方法*********************************
 
